@@ -1,0 +1,88 @@
+@import '../design/tokens.css';
+
+/* KRDS에는 다크 모드 값이 없어 라이트 모드만 둔다 */
+:root {
+  color-scheme: light;
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: var(--line-height-body);
+  color: var(--color-text-basic);
+  background: var(--color-background-white);
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-background-gray-subtler);
+  font-size: var(--font-size-body-medium);
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+a {
+  color: var(--color-link);
+  text-underline-offset: 3px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+}
+
+/* KRDS 초점 표시: 2px 실선, 요소에서 2px 띄움 */
+:focus-visible {
+  outline: var(--border-width-medium) solid var(--color-border-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

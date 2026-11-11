@@ -1,0 +1,182 @@
+/*
+ * 디자인 값 (KRDS 기반)
+ *
+ * 출처: KRDS 공식 저장소 github.com/KRDS-uiux/krds-uiux
+ *       resources/css/token/krds_tokens.css (2024-12-09 생성본)
+ * - 값만 가져왔다. KRDS 코드·이미지·컴포넌트는 복사하지 않았다.
+ * - KRDS는 html { font-size: 62.5% } (1rem = 10px) 기준이라, 여기서는 px로 바꿔 적었다.
+ *   예: --krds-mobile-font-size-body-medium 1.7rem → 17px
+ * - KRDS에는 다크 모드 값이 없고 고대비 모드만 있어 라이트 모드만 둔다.
+ * - 이름은 KRDS 이름을 줄여 쓰되, 어떤 토큰에서 왔는지 주석으로 남겼다.
+ */
+
+:root {
+  /* ---------- 기본 색 (PRIMITIVE, mode light) ---------- */
+  --primary-5: #ecf2fe;
+  --primary-10: #d8e5fd;
+  --primary-20: #b1cefb;
+  --primary-40: #4c87f6;
+  --primary-50: #256ef4;
+  --primary-60: #0b50d0;
+  --primary-70: #083891;
+  --primary-80: #052561;
+
+  --secondary-5: #eef2f7;
+  --secondary-10: #d6e0eb;
+  --secondary-50: #346fb2;
+  --secondary-70: #063a74;
+  --secondary-80: #052b57;
+
+  --gray-0: #ffffff;
+  --gray-5: #f4f5f6;
+  --gray-10: #e6e8ea;
+  --gray-20: #cdd1d5;
+  --gray-30: #b1b8be;
+  --gray-40: #8a949e;
+  --gray-50: #6d7882;
+  --gray-60: #58616a;
+  --gray-70: #464c53;
+  --gray-80: #33363d;
+  --gray-90: #1e2124;
+  --gray-95: #131416;
+
+  --danger-5: #fdefec;
+  --danger-10: #fcdfd9;
+  --danger-50: #de3412;
+  --danger-60: #bd2c0f;
+
+  --warning-5: #fff3db;
+  --warning-10: #ffe0a3;
+  --warning-30: #ffb114;
+  --warning-50: #9e6a00;
+  --warning-60: #8a5c00;
+
+  --success-5: #eaf6ec;
+  --success-10: #d8eedd;
+  --success-50: #228738;
+  --success-60: #267337;
+
+  --information-5: #e7f4fe;
+  --information-10: #d3ebfd;
+  --information-50: #0b78cb;
+  --information-60: #096ab3;
+
+  /* ---------- 역할별 색 (MODE-LIGHT) ---------- */
+  --color-text-bolder: var(--gray-95); /* text-bolder */
+  --color-text-basic: var(--gray-90); /* text-basic */
+  --color-text-subtle: var(--gray-70); /* text-subtle */
+  --color-text-disabled: var(--gray-40); /* text-disabled */
+  --color-text-primary: var(--primary-60); /* text-primary */
+  --color-text-danger: var(--danger-60); /* text-danger */
+  --color-text-warning: var(--warning-60); /* text-warning */
+  --color-text-success: var(--success-60); /* text-success */
+  --color-text-information: var(--information-60); /* text-information */
+  --color-text-inverse: var(--gray-0); /* text-basic-inverse */
+
+  --color-background-white: var(--gray-0); /* background-white */
+  --color-background-gray-subtler: var(--gray-5); /* background-gray-subtler */
+  --color-surface-gray-subtle: var(--gray-10); /* surface-gray-subtle */
+  --color-surface-primary-subtler: var(--primary-5); /* surface-primary-subtler */
+  --color-surface-secondary-subtler: var(--secondary-5); /* surface-secondary-subtler */
+  --color-surface-danger-subtler: var(--danger-5); /* surface-danger-subtler */
+  --color-surface-warning-subtler: var(--warning-5); /* surface-warning-subtler */
+  --color-surface-success-subtler: var(--success-5); /* surface-success-subtler */
+  --color-surface-information-subtler: var(--information-5); /* surface-information-subtler */
+  --color-surface-inverse: var(--gray-90); /* surface-inverse */
+
+  --color-border-gray-light: var(--gray-20); /* border-gray-light */
+  --color-border-gray: var(--gray-30); /* border-gray */
+  --color-border-gray-dark: var(--gray-60); /* border-gray-dark */
+  --color-border-gray-darker: var(--gray-90); /* border-gray-darker */
+  --color-border-primary: var(--primary-50); /* border-primary */
+  --color-border-primary-light: var(--primary-10); /* border-primary-light */
+  --color-border-danger: var(--danger-50); /* border-danger */
+  --color-border-warning: var(--warning-50); /* border-warning */
+  --color-border-success: var(--success-50); /* border-success */
+  --color-border-information: var(--information-50); /* border-information */
+  --color-divider-gray-light: var(--gray-20); /* divider-gray-light */
+
+  --color-element-primary: var(--primary-50); /* element-primary */
+  --color-element-primary-pressed: var(--primary-70); /* link-pressed와 같은 단계 */
+  --color-element-primary-hover: var(--primary-60); /* link-hover와 같은 단계 */
+  --color-element-danger: var(--danger-50); /* element-danger */
+  --color-element-warning: var(--warning-30); /* element-warning */
+  --color-element-success: var(--success-50); /* element-success */
+  --color-element-information: var(--information-50); /* element-information */
+  --color-element-disabled: var(--gray-20); /* element-disabled-light */
+
+  --color-icon-gray: var(--gray-80); /* icon-gray */
+  --color-link: var(--primary-50); /* link-default */
+  --color-link-hover: var(--primary-60); /* link-hover */
+  --color-dim: rgba(0, 0, 0, 0.75); /* background-dim (alpha-black75) */
+
+  /* ---------- 글자 (mobile font-size) ---------- */
+  /* KRDS 기본 글꼴은 Pretendard GOV. 웹은 팀 결정대로 Pretendard를 쓴다 */
+  --font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  --font-size-display-small: 28px; /* mobile display-small 2.8rem */
+  --font-size-heading-xlarge: 28px; /* mobile heading-xlarge 2.8rem */
+  --font-size-heading-large: 24px; /* mobile heading-large 2.4rem */
+  --font-size-heading-medium: 22px; /* mobile heading-medium 2.2rem */
+  --font-size-heading-small: 19px; /* mobile heading-small 1.9rem */
+  --font-size-heading-xsmall: 17px; /* mobile heading-xsmall 1.7rem */
+  --font-size-heading-xxsmall: 15px; /* mobile heading-xxsmall 1.5rem */
+  --font-size-body-large: 19px; /* mobile body-large 1.9rem */
+  --font-size-body-medium: 17px; /* mobile body-medium 1.7rem */
+  --font-size-body-small: 15px; /* mobile body-small 1.5rem */
+  --font-size-body-xsmall: 13px; /* mobile body-xsmall 1.3rem */
+  --font-size-label-medium: 17px; /* mobile label-medium 1.7rem */
+  --font-size-label-small: 15px; /* mobile label-small 1.5rem */
+  --font-size-label-xsmall: 13px; /* mobile label-xsmall 1.3rem */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --line-height-body: 1.5; /* KRDS 본문 행간 150% */
+  --line-height-heading: 1.4;
+
+  /* ---------- 간격 (number 단계) ---------- */
+  --number-1: 1px; /* 0.1rem */
+  --number-2: 2px; /* 0.2rem */
+  --number-3: 4px; /* 0.4rem */
+  --number-4: 6px; /* 0.6rem */
+  --number-5: 8px; /* 0.8rem */
+  --number-6: 10px; /* 1rem */
+  --number-7: 12px; /* 1.2rem */
+  --number-8: 16px; /* 1.6rem */
+  --number-9: 20px; /* 2rem */
+  --number-10: 24px; /* 2.4rem */
+  --number-11: 28px; /* 2.8rem */
+  --number-12: 32px; /* 3.2rem */
+  --number-14: 40px; /* 4rem */
+  --number-16: 48px; /* 4.8rem */
+  --number-17: 56px; /* 5.6rem */
+  --number-18: 64px; /* 6.4rem */
+
+  /* 모바일 레이아웃 간격 (mobile-gap-layout-*) */
+  --gap-h1-h2: var(--number-12); /* mobile-gap-layout-h1-h2 */
+  --gap-h2-h2: var(--number-14); /* mobile-gap-layout-h2-h2 */
+  --gap-h2-h3: var(--number-10); /* mobile-gap-layout-h2-h3 */
+  --gap-title-body: var(--number-7); /* mobile-gap-layout-title-body-medium */
+  --gap-text-text: var(--number-7); /* mobile-gap-layout-text-text-medium */
+  --gap-contents-footer: var(--number-14); /* mobile-gap-layout-contents-footer */
+  --padding-card: var(--number-10); /* mobile-padding-card-medium */
+  --padding-card-small: var(--number-9); /* mobile-padding-card-small */
+  --page-gutter: var(--number-8); /* 모바일 좌우 여백 16px */
+
+  /* ---------- 높이 (size-height-*) ---------- */
+  --height-small: 40px; /* size-height-6 */
+  --height-medium: 48px; /* size-height-7 */
+  --height-large: 56px; /* size-height-8 */
+
+  /* ---------- 모서리 (radius-*) ---------- */
+  --radius-xsmall: 2px; /* radius-xsmall1 */
+  --radius-small: 4px; /* radius-small1 */
+  --radius-medium: 6px; /* radius-medium1 */
+  --radius-medium-large: 8px; /* radius-medium3 */
+  --radius-large: 10px; /* radius-large1 */
+  --radius-xlarge: 12px; /* radius-xlarge1 */
+  --radius-max: 1000px; /* radius-max */
+
+  /* ---------- 테두리 (border-width-*) ---------- */
+  --border-width-regular: 1px; /* border-width-static-regular 0.1rem */
+  --border-width-medium: 2px; /* border-width-static-medium 0.2rem */
+}
