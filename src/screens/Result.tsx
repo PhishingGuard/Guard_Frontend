@@ -3,11 +3,11 @@ import { api } from '../api/client'
 import type { CheckResponse, UrlOut } from '../api/types'
 import { CitedText, SourceList } from '../components/Cited'
 import { Icon } from '../components/Icon'
-import { Banner, SummaryList, type SummaryRow } from '../components/Info'
+import { HotlineList, SummaryList, type SummaryRow } from '../components/Info'
 import { EmptyState, ErrorBox, Section, Spinner, TopBar } from '../components/Layout'
-import { ScoreMeter } from '../components/Verdict'
+import { VerdictHero } from '../components/Verdict'
 import { cacheResult, getCachedResult, LOCAL_ID } from '../lib/checkStore'
-import { formatDomainAge, formatNumber, HOTLINES, VERDICT_META } from '../lib/format'
+import { formatDomainAge, formatNumber } from '../lib/format'
 import { navigate } from '../lib/router'
 import { scrollToSource } from '../lib/scroll'
 import { useSlowFlag } from '../lib/useAsync'
@@ -108,16 +108,11 @@ export function Result({ id }: { id: string }) {
     )
   }
 
-  const meta = VERDICT_META[data.verdict]
   const showPending = pending && !pollGaveUp
   const blocklisted = data.urls.filter((u) => u.blocklisted).length
 
-  const summary: SummaryRow[] = [
-    { key: '판정', value: meta.label, emphasis: data.verdict === 'danger' ? 'danger' : data.verdict === 'suspicious' ? 'warning' : undefined },
-    { key: '위험도', value: `100점 만점에 ${data.score}점` },
-    { key: '수법', value: data.category_label },
-    { key: '링크', value: data.urls.length ? `${data.urls.length}개 조사` : '없음' },
-  ]
+  // 판정·위험도·수법은 위 판정 카드에 있으므로 여기서는 판별 과정 정보만
+  const summary: SummaryRow[] = [{ key: '링크', value: data.urls.length ? `${data.urls.length}개 조사` : '없음' }]
   if (blocklisted) summary.push({ key: '차단목록 링크', value: `${blocklisted}개`, emphasis: 'danger' })
   summary.push(
     { key: '설명 작성', value: data.explanation_source === 'llm' ? 'AI 생성' : '고정 문장' },
@@ -128,10 +123,8 @@ export function Result({ id }: { id: string }) {
     <div className="screen has-bottom-bar">
       <TopBar title="판별 결과" back />
 
-      <div className="pad top-gap">
-        <Banner tone={meta.banner} title="판별 결과" heading={`${meta.label}: ${meta.headline}`}>
-          <ScoreMeter score={data.score} verdict={data.verdict} />
-        </Banner>
+      <div className="pad">
+        <VerdictHero verdict={data.verdict} score={data.score} category={data.category_label} />
       </div>
 
       {data.actions.length > 0 && (
@@ -144,7 +137,7 @@ export function Result({ id }: { id: string }) {
         </Section>
       )}
 
-      <Section title="판별 요약">
+      <Section title="판별 정보">
         <SummaryList rows={summary} />
       </Section>
 
@@ -199,20 +192,7 @@ export function Result({ id }: { id: string }) {
 
       {data.verdict !== 'safe' && (
         <Section title="신고·상담 전화">
-          <ul className="list">
-            {HOTLINES.map((h) => (
-              <li key={h.number}>
-                <a className="list-item" href={`tel:${h.number}`}>
-                  <b className="hotline-number">{h.number}</b>
-                  <span className="list-main">
-                    <span className="list-title">{h.label}</span>
-                    <span className="list-sub">{h.desc}</span>
-                  </span>
-                  <Icon name="phone" size={18} />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <HotlineList />
         </Section>
       )}
 

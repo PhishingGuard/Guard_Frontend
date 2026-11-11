@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 import { SWAGGER_URL } from '../api/client'
+import { HOTLINES } from '../lib/format'
+import { Icon } from './Icon'
 
 // 지표 (KOSIS 표기): 이름 / 값 / 단위 / "○○ 기준"
 export interface IndicatorItem {
@@ -72,6 +74,28 @@ export function SummaryList({ rows }: { rows: SummaryRow[] }) {
         </div>
       ))}
     </dl>
+  )
+}
+
+// 신고·상담 전화 목록 (결과·설정 화면 공용)
+export function HotlineList() {
+  return (
+    <ul className="list">
+      {HOTLINES.map((h) => (
+        <li key={h.number}>
+          <a className="list-item" href={`tel:${h.number}`}>
+            <b className="hotline-number">{h.number}</b>
+            <span className="list-main">
+              <span className="list-title">{h.label}</span>
+              <span className="list-sub">{h.desc}</span>
+            </span>
+            <span className="call-btn" aria-hidden="true">
+              <Icon name="phone" size={18} />
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
   )
 }
 

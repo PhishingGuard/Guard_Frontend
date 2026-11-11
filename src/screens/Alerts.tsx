@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { api } from '../api/client'
 import type { AlertOut } from '../api/types'
+import { Icon } from '../components/Icon'
 import { SummaryList } from '../components/Info'
-import { EmptyState, ErrorBox, Spinner, TopBar } from '../components/Layout'
+import { EmptyState, ErrorBox, PageHead, Spinner, TopBar } from '../components/Layout'
 import { formatBasis, formatDate, formatDateTime } from '../lib/format'
 import { useAsync, useSlowFlag } from '../lib/useAsync'
 
@@ -20,13 +21,9 @@ export function Alerts() {
 
   return (
     <div className="screen">
-      <TopBar title="주의보" />
-      <div className="page-head">
-        <h1>주의보</h1>
-        <p>이번 주 판별 기록에서 평소보다 크게 늘어난 수법을 알립니다.</p>
-      </div>
+      <PageHead title="주의보" desc="이번 주 판별 기록에서 평소보다 크게 늘어난 수법을 알립니다." />
       <div className="pad">
-        <div className="tab-list" role="tablist" aria-label="주의보 범위">
+        <div className="pill-tabs" role="tablist" aria-label="주의보 범위">
           {(
             [
               ['active', '발령 중', active.length],
@@ -47,23 +44,25 @@ export function Alerts() {
           ))}
         </div>
 
-        {loading ? (
-          <Spinner label={slow ? '서버를 깨우는 중입니다…' : undefined} />
-        ) : error ? (
-          <ErrorBox message={error.message} onRetry={reload} />
-        ) : shown.length === 0 ? (
-          <EmptyState icon="bell" title={filter === 'active' ? '발령 중인 주의보가 없습니다' : '주의보 기록이 없습니다'}>
-            <p>특정 수법이 갑자기 늘면 이곳에 알립니다.</p>
-          </EmptyState>
-        ) : (
-          <ul className="list">
-            {shown.map((a) => (
-              <li key={a.id}>
-                <AlertRow alert={a} />
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="card">
+          {loading ? (
+            <Spinner label={slow ? '서버를 깨우는 중입니다…' : undefined} />
+          ) : error ? (
+            <ErrorBox message={error.message} onRetry={reload} />
+          ) : shown.length === 0 ? (
+            <EmptyState icon="bell" title={filter === 'active' ? '발령 중인 주의보가 없습니다' : '주의보 기록이 없습니다'}>
+              <p>특정 수법이 갑자기 늘면 이곳에 알립니다.</p>
+            </EmptyState>
+          ) : (
+            <ul className="list">
+              {shown.map((a) => (
+                <li key={a.id}>
+                  <AlertRow alert={a} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         {data && <p className="basis-line">{formatBasis(data.at)}</p>}
       </div>
     </div>
@@ -73,6 +72,9 @@ export function Alerts() {
 function AlertRow({ alert }: { alert: AlertOut }) {
   return (
     <a className="list-item alert-row" href={`#/alerts/${alert.id}`}>
+      <span className={`icon-tile ${alert.active ? 'tone-red' : 'tone-gray'}`}>
+        <Icon name="bell" size={20} />
+      </span>
       <span className="list-main">
         <span className="row-tags">
           <span className={`tag ${alert.active ? 'tone-danger' : ''}`}>{alert.active ? '발령 중' : '종료'}</span>
@@ -83,6 +85,7 @@ function AlertRow({ alert }: { alert: AlertOut }) {
           {formatDate(alert.week_start)} 주 · {alert.count.toLocaleString()}건 확인
         </span>
       </span>
+      <Icon name="chevron" size={18} />
     </a>
   )
 }
@@ -126,8 +129,9 @@ export function AlertDetail({ id }: { id: number }) {
             <span className={`tag ${alert.active ? 'tone-danger' : ''}`}>{alert.active ? '발령 중' : '종료'}</span>
             <h1>{alert.title}</h1>
           </div>
-          <div className="pad stack-lg">
-            <SummaryList
+          <div className="pad stack">
+            <div className="card">
+              <SummaryList
               rows={[
                 { key: '수법', value: alert.topic },
                 { key: '기준 주', value: `${formatDate(alert.week_start)} 주` },
@@ -135,9 +139,10 @@ export function AlertDetail({ id }: { id: number }) {
                 { key: '발령 기준', value: `${Math.round(alert.threshold).toLocaleString()}건 (예측 상한)` },
                 { key: '발령 일시', value: formatDateTime(alert.created_at) },
               ]}
-            />
-            <CountBar count={alert.count} threshold={alert.threshold} />
-            <div className="body-text">{alert.body}</div>
+              />
+              <CountBar count={alert.count} threshold={alert.threshold} />
+            </div>
+            <div className="card body-text">{alert.body}</div>
             <a className="primary-btn" href="#/">
               받은 문자 확인하기
             </a>

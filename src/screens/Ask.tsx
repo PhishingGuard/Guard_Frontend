@@ -3,7 +3,7 @@ import { api } from '../api/client'
 import type { AskResponse } from '../api/types'
 import { CitedText, SourceList } from '../components/Cited'
 import { Icon } from '../components/Icon'
-import { TopBar } from '../components/Layout'
+import { PageHead, TopBar } from '../components/Layout'
 import { VerdictBadge } from '../components/Verdict'
 import { getCachedResult } from '../lib/checkStore'
 import { scrollToSource } from '../lib/scroll'
@@ -60,7 +60,7 @@ export function Ask({ checkId }: { checkId?: string }) {
 
   return (
     <div className="screen chat-screen">
-      <TopBar title="물어보기" back={checkId ? true : undefined} />
+      {checkId ? <TopBar title="물어보기" back /> : <PageHead title="물어보기" />}
 
       <div className="chat-body">
         {linked && checkId && (
@@ -74,19 +74,22 @@ export function Ask({ checkId }: { checkId?: string }) {
         )}
 
         {messages.length === 0 && (
-          <div className="chat-intro">
-            <span className="chat-intro-icon">
-              <Icon name="chat" size={26} />
+          <div className="card chat-intro">
+            <span className="icon-tile tone-blue">
+              <Icon name="chat" size={20} />
             </span>
             <h2>피싱이 걱정될 때 물어보세요</h2>
             <p className="field-hint">대응 가이드와 사례에서 찾아 출처와 함께 답합니다.</p>
-            <div className="example-list">
+            <ul className="list example-list">
               {EXAMPLES.map((e) => (
-                <button key={e} type="button" className="example" onClick={() => send(e)}>
-                  {e}
-                </button>
+                <li key={e}>
+                  <button type="button" className="list-item example" onClick={() => send(e)}>
+                    <span className="list-main">{e}</span>
+                    <Icon name="chevron" size={18} />
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         )}
 

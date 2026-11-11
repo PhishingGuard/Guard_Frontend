@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { API_BASE, SWAGGER_URL, api } from '../api/client'
 import { Icon } from '../components/Icon'
-import { Footer, SummaryList } from '../components/Info'
-import { Section, TopBar } from '../components/Layout'
-import { HOTLINES, REGIONS, formatBasis } from '../lib/format'
+import { Footer, HotlineList, SummaryList } from '../components/Info'
+import { PageHead, Section } from '../components/Layout'
+import { REGIONS, formatBasis } from '../lib/format'
 import { clearHistory, getHistory, getRegion, setRegion } from '../lib/storage'
 import { useAsync } from '../lib/useAsync'
 
@@ -17,16 +17,16 @@ export function Settings() {
 
   return (
     <div className="screen">
-      <TopBar title="설정" />
+      <PageHead title="설정" />
 
       <Section title="알림">
         <div className="field">
-          <label className="field-label" htmlFor="region">
+          <label className="field-label with-icon" htmlFor="region">
+            <span className="icon-tile tone-blue small">
+              <Icon name="pin" size={16} />
+            </span>
             알림 받을 지역
           </label>
-          <p className="field-hint">
-            푸시 알림은 앱에서만 받을 수 있습니다. 웹에서는 주의보 화면에서 확인하세요.
-          </p>
           <select
             id="region"
             className="input"
@@ -43,13 +43,17 @@ export function Settings() {
               </option>
             ))}
           </select>
+          <p className="field-hint">푸시 알림은 앱에서만 받을 수 있습니다. 웹에서는 주의보 화면에서 확인하세요.</p>
         </div>
       </Section>
 
-      <Section title="신고">
+      <Section title="신고·상담">
         <ul className="list">
           <li>
             <a className="list-item" href="#/report">
+              <span className="icon-tile tone-red">
+                <Icon name="flag" size={20} />
+              </span>
               <span className="list-main">
                 <span className="list-title">받은 문자 신고</span>
                 <span className="list-sub">판별하지 않은 문자도 익명으로 신고할 수 있습니다.</span>
@@ -57,39 +61,33 @@ export function Settings() {
               <Icon name="chevron" size={18} />
             </a>
           </li>
-          {HOTLINES.map((h) => (
-            <li key={h.number}>
-              <a className="list-item" href={`tel:${h.number}`}>
-                <b className="hotline-number">{h.number}</b>
-                <span className="list-main">
-                  <span className="list-title">{h.label}</span>
-                  <span className="list-sub">{h.desc}</span>
-                </span>
-                <Icon name="phone" size={18} />
-              </a>
-            </li>
-          ))}
         </ul>
+        <HotlineList />
       </Section>
 
       <Section title="내 기록">
-        <p className="section-desc">
-          이 기기에 최근 판별 {historyCount.toLocaleString()}건이 있습니다. 개인정보를 가린 문자만 보관합니다.
-        </p>
-        <button
-          type="button"
-          className="secondary-btn"
-          disabled={historyCount === 0}
-          onClick={() => {
-            if (window.confirm('이 기기에 저장된 최근 판별 기록을 지우시겠습니까?')) {
-              clearHistory()
-              setHistoryCount(0)
-            }
-          }}
-        >
-          <Icon name="trash" size={18} />
-          기록 지우기
-        </button>
+        <div className="record-row">
+          <span className="icon-tile tone-gray">
+            <Icon name="clock" size={20} />
+          </span>
+          <span className="list-main">
+            <span className="list-title">최근 판별 {historyCount.toLocaleString()}건</span>
+            <span className="list-sub">이 기기에만 있습니다. 개인정보를 가린 문자만 보관합니다.</span>
+          </span>
+          <button
+            type="button"
+            className="chip-btn danger"
+            disabled={historyCount === 0}
+            onClick={() => {
+              if (window.confirm('이 기기에 저장된 최근 판별 기록을 지우시겠습니까?')) {
+                clearHistory()
+                setHistoryCount(0)
+              }
+            }}
+          >
+            지우기
+          </button>
+        </div>
       </Section>
 
       <Section title="서비스 상태">
@@ -114,9 +112,15 @@ export function Settings() {
             { key: '확인 시점', value: health.data ? formatBasis(health.data.at) : '-' },
           ]}
         />
-        <ul className="list top-gap">
+      </Section>
+
+      <Section title="개발·운영">
+        <ul className="list">
           <li>
             <a className="list-item" href={SWAGGER_URL} target="_blank" rel="noreferrer noopener">
+              <span className="icon-tile tone-gray">
+                <Icon name="doc" size={20} />
+              </span>
               <span className="list-main">
                 <span className="list-title">API 문서(Swagger)</span>
                 <span className="list-sub">새 창에서 열립니다.</span>
@@ -126,6 +130,9 @@ export function Settings() {
           </li>
           <li>
             <a className="list-item" href="#/admin">
+              <span className="icon-tile tone-gray">
+                <Icon name="lock" size={20} />
+              </span>
               <span className="list-main">
                 <span className="list-title">관리자</span>
                 <span className="list-sub">신고 검수, 문서 등록, 데이터 관리</span>

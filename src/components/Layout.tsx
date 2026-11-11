@@ -50,9 +50,33 @@ export function TabBar({ active }: { active: string }) {
   )
 }
 
-export function Section({ title, action, children }: { title?: ReactNode; action?: ReactNode; children: ReactNode }) {
+// 탭 첫 화면의 큰 제목 (가운데 제목 줄 대신)
+export function PageHead({ title, desc, right }: { title: ReactNode; desc?: ReactNode; right?: ReactNode }) {
   return (
-    <section className="section">
+    <div className="page-head is-large">
+      <div className="page-head-row">
+        <h1>{title}</h1>
+        {right}
+      </div>
+      {desc && <p>{desc}</p>}
+    </div>
+  )
+}
+
+// 흰 카드 구역. plain이면 카드 없이 회색 바탕에 제목만 둔다 (가로 스크롤 목록 등)
+export function Section({
+  title,
+  action,
+  plain,
+  children,
+}: {
+  title?: ReactNode
+  action?: ReactNode
+  plain?: boolean
+  children: ReactNode
+}) {
+  return (
+    <section className={plain ? 'section is-plain' : 'section'}>
       {(title || action) && (
         <div className="section-head">
           {title && <h2 className="section-title">{title}</h2>}

@@ -70,13 +70,14 @@ export function Report({ checkId }: { checkId?: string }) {
       </div>
 
       <form
-        className="pad form"
+        className="pad form is-cards"
         onSubmit={(e) => {
           e.preventDefault()
           void submit()
         }}
       >
         {result && (
+          <div className="card">
           <SummaryList
             rows={[
               { key: '판정', value: `${VERDICT_META[result.verdict].label} (${result.score}점)` },
@@ -84,10 +85,11 @@ export function Report({ checkId }: { checkId?: string }) {
               { key: '문자', value: <span className="ellipsis-2">{result.masked_text}</span> },
             ]}
           />
+          </div>
         )}
 
-        <fieldset className="field">
-          <legend className="field-label">무엇이 틀렸나요?</legend>
+        <fieldset className="card field">
+          <legend className="field-label">{checkId ? '무엇이 틀렸나요?' : '어떤 문자인가요?'}</legend>
           <div className="radio-list">
             {LABELS.map((l) => (
               <label key={l.value} className={`radio-item${label === l.value ? ' is-on' : ''}`}>
@@ -108,7 +110,7 @@ export function Report({ checkId }: { checkId?: string }) {
         </fieldset>
 
         {!checkId && (
-          <div className="field">
+          <div className="card field">
             <label className="field-label" htmlFor="report-text">
               받은 문자
             </label>
@@ -124,6 +126,7 @@ export function Report({ checkId }: { checkId?: string }) {
           </div>
         )}
 
+        <div className="card stack">
         <div className="field">
           <label className="field-label" htmlFor="report-url">
             의심 링크 <span className="optional">선택</span>
@@ -153,6 +156,7 @@ export function Report({ checkId }: { checkId?: string }) {
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
           />
+        </div>
         </div>
 
         {error && <ErrorBox message={error} />}

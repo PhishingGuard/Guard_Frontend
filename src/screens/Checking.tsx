@@ -60,12 +60,12 @@ export function Checking() {
         {!error && <p>보통 3초 안에 끝납니다.</p>}
       </div>
 
-      <div className="pad stack-lg">
+      <div className="pad stack">
         {error ? (
           <ErrorBox message={error} onRetry={retry} />
         ) : (
           <>
-            <ol className="steps" aria-live="polite">
+            <ol className="card steps" aria-live="polite">
               {STEPS.map((s, i) => (
                 <li key={s} className={i < step ? 'is-done' : i === step ? 'is-now' : ''}>
                   <span className="step-mark" aria-hidden="true">
@@ -85,7 +85,7 @@ export function Checking() {
           </>
         )}
 
-        <div className="field">
+        <div className="card field">
           <span className="field-label">확인 중인 문자</span>
           <blockquote className="quote-preview">{req.text}</blockquote>
         </div>

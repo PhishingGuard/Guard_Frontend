@@ -3,7 +3,7 @@ import { ApiError, api } from '../api/client'
 import type { TrendName } from '../api/types'
 import { BarList, DataTable, LineChart, type LinePoint } from '../components/Charts'
 import { Indicators } from '../components/Info'
-import { EmptyState, ErrorBox, Spinner, TopBar } from '../components/Layout'
+import { EmptyState, ErrorBox, PageHead, Spinner } from '../components/Layout'
 import { RegionMap } from '../components/RegionMap'
 import { formatBasis, formatNumber } from '../lib/format'
 import { normalizeRegion } from '../lib/region'
@@ -49,8 +49,8 @@ export function Stats() {
 
   return (
     <div className="screen">
-      <TopBar title="통계" />
-      <div className="tab-list scroll" role="tablist" aria-label="통계 종류">
+      <PageHead title="통계" desc="공개 데이터와 이 서비스의 판별 기록을 분석한 결과입니다." />
+      <div className="chip-tabs" role="tablist" aria-label="통계 종류">
         {TABS.map((t) => (
           <button
             key={t.name}
@@ -64,9 +64,12 @@ export function Stats() {
           </button>
         ))}
       </div>
-      <div className="pad top-gap">
-        <p className="section-desc">{current.desc}</p>
-        <TrendPanel key={tab} name={tab} source={current.source} />
+      <div className="pad">
+        <section className="card">
+          <h2 className="section-title">{current.label}</h2>
+          <p className="section-desc">{current.desc}</p>
+          <TrendPanel key={tab} name={tab} source={current.source} />
+        </section>
       </div>
     </div>
   )
@@ -92,7 +95,7 @@ function TrendPanel({ name, source }: { name: TrendName; source: string }) {
   const basis = formatBasis(data.computed_at)
   return (
     <div className="stack-lg">
-      <h2 className="section-title">{data.title}</h2>
+      <h3 className="sub-heading">{data.title}</h3>
       <PayloadView value={data.payload} depth={0} basis={basis} />
       {/* 출처와 완전성 경고는 화면 아래에 한 번만 (planning.data 방식) */}
       <div className="data-note">

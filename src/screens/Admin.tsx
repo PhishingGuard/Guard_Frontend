@@ -55,7 +55,7 @@ export function Admin() {
           </button>
         }
       />
-      <div className="tab-list" role="tablist" aria-label="관리 메뉴">
+      <div className="chip-tabs" role="tablist" aria-label="관리 메뉴">
         {(
           [
             ['reports', '신고 검수'],
@@ -69,9 +69,11 @@ export function Admin() {
         ))}
       </div>
       <div className="pad top-gap">
-        {tab === 'reports' && <ReportsPanel token={token} />}
-        {tab === 'documents' && <DocumentPanel token={token} />}
-        {tab === 'data' && <DataPanel token={token} />}
+        <div className="card">
+          {tab === 'reports' && <ReportsPanel token={token} />}
+          {tab === 'documents' && <DocumentPanel token={token} />}
+          {tab === 'data' && <DataPanel token={token} />}
+        </div>
       </div>
     </div>
   )
@@ -110,7 +112,7 @@ function TokenForm({ onSave }: { onSave: (token: string) => void }) {
           void submit()
         }}
       >
-        <div className="field">
+        <div className="card field">
           <label className="field-label" htmlFor="admin-token">
             관리자 토큰
           </label>
